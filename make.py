@@ -52,9 +52,34 @@ def getSCmd():
         if len(ret) <2:
             continue        
         dScmd.append(ret[0])
-        
-        
 
+dCmdType=[]
+def getCmdType():
+     ret = dataUnit.dEnum['class CmdType']
+
+     bStart=False
+     for line in ret.strip().split('\n'):
+        if '{' in line:
+             bStart = True
+             continue
+        if bStart==False:
+            continue
+        if '}' in line:
+            break
+        rett = line.strip().replace('\t','').split(',')
+        if len(rett)<2:
+            continue
+        dCmdType.append(rett[0])
+
+getCmdType()
+#print(dCmdType)
+ 
+getSCmd()  
+#print(dScmd)  
+i=0
+for cmdType in dCmdType:
+    print(cmdType,"--->",dScmd[i])
+    i+=1    
 def test(typ):
     aWriter.writeCmdType(typ)
     ret = dataUnit.getStruct(typ)
@@ -70,7 +95,5 @@ def w():
         aWriter.writeItem(str(ret))
 #w()
 #test('SCmd')   
-getSCmd()  
-print(dScmd)   
 
 
